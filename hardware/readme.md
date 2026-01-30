@@ -1,1 +1,70 @@
-🏆 2025年全国大学生电子设计竞赛（A题）：能量回馈的变流器负载实验装置项目自述：本项目为 2025 年电赛 A 题的硬件参考方案。系统采用双向变流拓扑，实现了能量的高效回馈与负载特性的精确模拟，具备高精度采样与多重硬件保护机制。💎 项目核心亮点 (Core Highlights)🚀 高效能能量回馈：采用同步整流技术，系统能量回馈效率 $>\!90\%$。🛡️ 工业级保护：硬件级过流保护（比较器锁存）、过压钳位及过热自动限流。🎨 信号完整性优化：四层板设计，模拟信号与功率回路物理分区，采样噪声底噪 $<\!5mV$。📦 模块化设计：功率控制板、驱动板、采样调理模块采用标准化接口，便于赛场快速更换。📋 技术指标 (Specifications)参数名称指标数值备注输入/输出电压$DC \ 30V \sim 60V$宽压双向工作回馈电流精度$\le 1\%$闭环控制精度反馈效率 ($\eta$)$\ge 92\%$满载回馈状态开关频率 ($f_{sw}$)$80kHz \sim 150kHz$可调 PWM 载频⚡ 电路设计深度解析 (Circuit Design)1. 功率拓扑与稳压树 (Power Architecture)系统采用双向 Buck-Boost 拓扑以实现能量回馈。电源分配采用分级设计：控制层电源：通过 DCDC 降压至 $5V$，再由低偏置 LDO 产生 $3.3V$ 供给 MCU。驱动层电源：独立隔离电源 $15V$，确保驱动瞬态电流充沛，防止共模干扰。核心电感计算：为保证连续电流模式 (CCM)，电感量 $L$ 计算如下：$$L > \frac{V_{out} \cdot (V_{in} - V_{out})}{\Delta I_L \cdot f_s \cdot V_{in}}$$2. 高精度采样调理采用霍尔电流传感器或精密锰铜电阻配合高边采样芯片：差分调理：利用仪表运放抑制共模电压。滤波环节：二阶巴特沃斯低通滤波，滤除高频开关毛刺：$$f_c = \frac{1}{2\pi \sqrt{R_1 R_2 C_1 C_2}}$$🎨 PCB 布局工艺 (PCB Layout Strategy)1. 四层板叠层方案 (4-Layer Stackup)为了通过电磁兼容测试并降低干扰，建议采用以下叠层：Top (Signal)：敏感控制线、反馈采样信号。GND (Plane)：完整连续的地平面，提供最短回流路径。Power (Plane)：电源平面分割（功率电轨）。Bottom (Signal)：大电流功率回路走线、散热开窗。2. 关键布局原则热隔离：功率 MOS 管与电感下方不走线，减少涡流损耗与干扰。开窗补锡：功率路径进行 PCB 露铜设计，焊接时增加锡层厚度以承载大电流。单点接地：模拟地 (AGND) 与功率地 (PGND) 通过磁珠进行单点连接，避免环路电流污染采样信号。📸 硬件视觉展示 (Gallery)3D 设计模型实验实测顶层俯视 (Top View)底层透视 (Bottom View)满载工作波形📦 核心物料清单 (BOM Highlight)序号类别型号/规格关键特性数量1MCUSTM32G474专用高精度 HRTIM，双 bank ADC12隔离驱动UCC215205.7kV 隔离，高共模瞬态抗扰度23功率管BSC030N08NS5$80V / 100A / 3m\Omega$ 低内阻4🚀 总结与后续改进项目优势：高可靠性：通过了长达 2 小时的负载模拟测试。高效率：在 $50W$ 以上功率段保持了极高的转换效率。待改进点：目前采样速率受限于外部运放带宽，未来可考虑使用内置 PGA 的 MCU。功率密度可进一步优化，缩小散热片体积。📝 开源协议与声明本项目基于 MIT 许可协议 开源。请在引用时注明出处。设计者： [您的名字/团队名称]联系方式： [您的邮箱/GitHub主页链接]
+<div align="center">
+
+# 🏆 2025电赛：2025年全国大学生设计大赛：能量回馈的变流器负载实验装置（A题）硬件部分
+
+**基于 STM32G474RBT6 的三相逆变-整流-回馈系统**
+
+[![Build Status](https://img.shields.io/badge/Status-Completed-success.svg?style=flat-square)]()
+[![Hardware](https://img.shields.io/badge/Hardware-LcEDA-red.svg?style=flat-square)]()
+[![License](https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-lightgrey.svg?style=flat-square)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![Star](https://img.shields.io/github/stars/你的用户名/仓库名.svg?style=flat-square&color=yellow)](https://github.com/你的用户名/仓库名)
+
+[项目主页](你的链接) · [设计报告](./Documents/report.pdf) · [演示视频](你的B站链接)
+
+</div>
+
+---
+
+## 📖 项目简介
+本项目为 **2025年全国大学生电子设计竞赛** 的 [A题：能量回馈的变流器负载实验装置] 作品。
+
+
+### ✨ 核心特性
+* 🎨 **交互友好**：配备串口屏，实现功能切换和调频
+* 🛠️ **模块化**：硬件电路采用模块化设计，方便二次开发与维护。
+
+---
+
+## 🛠️ 硬件设计说明
+
+### ⚡ 系统框图
+> (基础部分系统框图)
+![alt text](image-1.png)
+> (发挥部分系统框图)
+![alt text](image-2.png)
+> (最终作品图)
+![alt text](image.png)
+
+### 📐 PCB 预览
+| Top View (3D) | Bottom View (3D) |
+| :---: | :---: |
+| ![Top](./Images/pcb_top.png) | ![Bottom](./Images/pcb_bottom.png) |
+
+### 🔍 关键模块参数
+* **电源层**：四层板设计，内层完整铺地，保证数字信号与模拟信号的隔离。
+* **模拟前端**：基于 [OPAxxx] 的低噪声放大电路，输入阻抗达 [X] MΩ。
+* **散热设计**：背部露铜加锡，配合主动散热风扇。
+
+---
+
+## 📂 资源清单
+| 文件夹 | 说明 | 格式 |
+| :--- | :--- | :--- |
+| 📁 `Hardware/` | 原理图、PCB、BOM清单、库文件 | `.SchDoc`, `.PcbDoc`, `.PDF` |
+| 📁 `Firmware/` | 基于 [STM32CubeIDE/Keil] 开发的嵌入式代码 | `.c`, `.h` |
+| 📁 `Docs/` | 设计报告、计算说明书、测试数据 | `.pdf`, `.xlsx` |
+| 📁 `Tools/` | 辅助调试工具、上位机源码 | `.py`, `.exe` |
+
+---
+
+## 🚀 快速上手
+
+### 1. 硬件准备
+* 使用 **Altium Designer 24** 或更高版本打开 `Hardware/` 目录下的工程。
+* 根据 `BOM.xlsx` 采购元器件（建议选择高精密低温漂电阻）。
+
+### 2. 软件烧录
+```bash
+# 如果有命令行烧录方式可写在此处，否则写操作步骤
+1. 打开 Firmware/Project.uvprojx
+2. 编译并烧录至目标板
